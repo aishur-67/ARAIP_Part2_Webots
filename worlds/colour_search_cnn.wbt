@@ -1,0 +1,101 @@
+#VRML_SIM R2025a utf8
+# 5FTC2068 ARAIP Project Part 2 - e-puck colour block search + CNN camera
+# Blocks: 0.3 x 0.3 x 0.1 m at random positions (seed 2068, see README)
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/robots/gctronic/e-puck/protos/E-puck.proto"
+
+WorldInfo {
+  info [
+    "ARAIP Project Part 2: colour block search and CNN camera capture"
+  ]
+  title "e-puck colour search + CNN"
+  basicTimeStep 32
+}
+Viewpoint {
+  orientation -0.5774 0.5774 0.5774 2.0944
+  position 0 0 5.6
+}
+Background {
+  skyColor [
+    0.82 0.84 0.86
+  ]
+  luminosity 1.2
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 2 2
+  floorTileSize 0.5 0.5
+  floorAppearance PBRAppearance {
+    baseColorMap ImageTexture {
+      url [
+        "textures/checker.png"
+      ]
+      filtering 0
+    }
+    roughness 1
+    metalness 0
+  }
+  wallHeight 0.1
+}
+Solid {
+  translation 0.000 0.141 0.05
+  rotation 0 0 1 2.595
+  children [
+    DEF RED_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.3 0.3 0.1
+      }
+    }
+  ]
+  name "red block"
+  boundingObject USE RED_SHAPE
+}
+Solid {
+  translation -0.673 -0.589 0.05
+  rotation 0 0 1 2.557
+  children [
+    DEF BLUE_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0 0 1
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.3 0.3 0.1
+      }
+    }
+  ]
+  name "blue block"
+  boundingObject USE BLUE_SHAPE
+}
+Solid {
+  translation 0.058 -0.609 0.05
+  rotation 0 0 1 0.031
+  children [
+    DEF GREEN_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0 1 0
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.3 0.3 0.1
+      }
+    }
+  ]
+  name "green block"
+  boundingObject USE GREEN_SHAPE
+}
+E-puck {
+  translation 0.75 0.65 0
+  rotation 0 0 1 -2.3
+  controller "colour_search_cnn"
+}
