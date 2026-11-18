@@ -1,0 +1,67 @@
+#VRML_SIM R2025a utf8
+# 5FTC2068 ARAIP Project Part 2 - CNN prediction on an e-puck camera image
+# A cat is placed in front of the robot and a dog behind it. The e-puck stands on a
+# 12 cm platform so its camera (normally 3 cm above the floor) sees the whole animal.
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/robots/gctronic/e-puck/protos/E-puck.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/animals/protos/Cat.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/animals/protos/Dog.proto"
+
+WorldInfo {
+  title "e-puck CNN camera test"
+  basicTimeStep 32
+}
+Viewpoint {
+  orientation 0.2 0.1 -0.97 2.4
+  position 1.6 1.3 0.9
+}
+Background {
+  skyColor [
+    0.82 0.84 0.86
+  ]
+  luminosity 1.2
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 5 5
+  floorAppearance PBRAppearance {
+    baseColor 0.75 0.75 0.75
+    roughness 1
+    metalness 0
+  }
+}
+Cat {
+  translation 0.9 0 0
+  rotation 0 0 1 1.5708
+}
+Dog {
+  translation -1.7 0 0
+  rotation 0 0 1 1.5708
+}
+DEF PLATFORM Solid {
+  translation 0 0 0.06
+  children [
+    DEF PLATFORM_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.35 0.35 0.38
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.25 0.25 0.12
+      }
+    }
+  ]
+  name "camera platform"
+  boundingObject USE PLATFORM_SHAPE
+}
+E-puck {
+  translation 0 0 0.121
+  rotation 0 0 1 0
+  controller "cnn_camera_test"
+  camera_width 160
+  camera_height 120
+}
